@@ -66,6 +66,11 @@ function getcity(country, zip) {
       var result = JSON.parse(data);
       $$('#get-city-results').html('');
       for (var i = 0; i < result.places.length; i++) {
+        if(result.places[i]['state'] == ""){
+          result.places[i]['state'] = "State: Unknown";
+        }else{
+          result.places[i]['state'] = result.places[i]['state'] +', '+result.places[i]['state abbreviation']
+        }
         $$('#get-city-results').append(`
             <li class="item-content">
               <div class="item-inner">
@@ -73,7 +78,7 @@ function getcity(country, zip) {
                   ${result.places[i]["place name"]}
                 </div>
                 <div class="item-after">
-                  State: ${result.places[i]['state']}, ${result.places[i]['state abbreviation']}
+                  ${result.places[i]['state']}
                 </div>
               </div>
             </li>
