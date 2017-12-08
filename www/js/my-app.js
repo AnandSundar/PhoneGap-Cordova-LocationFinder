@@ -99,7 +99,7 @@ function getzip(country, city, state) {
         <li class="item-content">
           <div class="item-inner">
             <div class="item-title">
-              <h5>OOPS! City or State not found in the selected country</h5>
+              <h5>OOPS! City or State not found</h5>
             </div>
             <div class="item-after">
 
