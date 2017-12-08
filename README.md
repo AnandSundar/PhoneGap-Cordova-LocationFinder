@@ -6,7 +6,7 @@
 <li>PhoneGap</li>
 <li>Cordova</li>
 <li>Framework 7</li>
-<li>zippoptam.us api</li>
+<li>zippopotam.us api</li>
 </ul>
 
 # Framework7 PhoneGap Application
