@@ -53,7 +53,7 @@ function getcity(country, zip) {
         <li class="item-content">
           <div class="item-inner">
             <div class="item-title">
-              <h5>OOPS! Zipcode not found in the selected country</h5>
+              <h5>OOPS! Zipcode not found</h5>
             </div>
             <div class="item-after">
 
