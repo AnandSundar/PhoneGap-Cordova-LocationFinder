@@ -24,62 +24,102 @@ $$(document).on('deviceready', function() {
 //capture city and state data
 myApp.onPageInit('get-zip', function (page) {
   $$('#get-zip-form').on('submit', function (e) {
+    var country = $$('#country').val();
     var city = $$('#city').val();
     var state = $$('#state').val();
     e.preventDefault();
-    getzip(city,state);
+    getzip(country,city,state);
   });
 })
 
-//capture zipcode date
+//capture zipcode data
 myApp.onPageInit('get-city', function (page) {
   $$('#get-city-form').on('submit', function (e) {
+    var country = $$('#country').val();
     var zip = $$('#zip').val();
     e.preventDefault();
-    getcity(zip);
+    getcity(country,zip);
   });
 })
- 
+
 //use the zippopotam.us api to get city
-function getcity(zip) {
-  $$.get('http://api.zippopotam.us/us/'+zip, {}, function (data) {
-    var result = JSON.parse(data);
-    $$('#get-city-results').html('');
-    for (var i = 0; i < result.places.length; i++) {
+function getcity(country, zip) {
+  $$.ajax({
+    type: "GET",
+    url: 'http://api.zippopotam.us/'+country+'/'+zip,
+    error: function(xhr, statusText) {
+      $$('#get-city-results').html('');
       $$('#get-city-results').append(`
-          <li class="item-content">
-            <div class="item-inner">
-              <div class="item-title">
-                ${result.places[i]["place name"]}
-              </div>
-              <div class="item-after">
-                State: ${result.places[i]['state']}
-              </div>
+        <li class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <h5>OOPS! Zipcode not found in the selected country</h5>
             </div>
-          </li>
+            <div class="item-after">
+
+            </div>
+          </div>
+        </li>
         `);
+    },
+    success: function(data){
+      var result = JSON.parse(data);
+      $$('#get-city-results').html('');
+      for (var i = 0; i < result.places.length; i++) {
+        $$('#get-city-results').append(`
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title">
+                  ${result.places[i]["place name"]}
+                </div>
+                <div class="item-after">
+                  State: ${result.places[i]['state']}, ${result.places[i]['state abbreviation']}
+                </div>
+              </div>
+            </li>
+          `);
+      }
     }
   });
 }
 
-//use the zippopotamus.us api to get zip, lat and lng
-function getzip(city, state) {
-  $$.get('http://api.zippopotam.us/us/'+state+'/'+city, {}, function (data) {
-    var result = JSON.parse(data);
-    $$('#get-zip-results').html('');
-    for (var i = 0; i < result.places.length; i++) {
+//use the zippopotamus.us api to get zip and place name
+function getzip(country, city, state) {
+  $$.ajax({
+    type: "GET",
+    url: 'http://api.zippopotam.us/'+country+'/'+state+'/'+city,
+    error: function(xhr, statusText) {
+      $$('#get-zip-results').html('');
       $$('#get-zip-results').append(`
-          <li class="item-content">
-            <div class="item-inner">
-              <div class="item-title">
-                ${result.places[i]["post code"]}
-              </div>
-              <div class="item-after">
-                Lat: ${result.places[i]['latitude']}, Lng: ${result.places[i]['longitude']}
-              </div>
+        <li class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <h5>OOPS! City or State not found in the selected country</h5>
             </div>
-          </li>
+            <div class="item-after">
+
+            </div>
+          </div>
+        </li>
         `);
+    },
+    success: function(data){
+      var result = JSON.parse(data);
+      $$('#get-zip-results').html('');
+      for (var i = 0; i < result.places.length; i++) {
+        $$('#get-zip-results').append(`
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title">
+                    ${result.places[i]["place name"]}
+                </div>
+                <div class="item-after">
+                  ${result.places[i]["post code"]}
+                </div>
+              </div>
+            </li>
+          `);
+      }
     }
   });
 }

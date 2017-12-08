@@ -1,5 +1,5 @@
 <h1>Location Finder App</h1>
-<p>This app lets lets the user find zipcode using city, state and city, state using zipcode. This is a hybrid app that is built to be used as a web application, android appication or iOS application</p>
+<p>This app lets lets the user find zipcode using city, state and city, state using zipcode. This is a hybrid app that is built to be used as a web application, android appication, windows application or iOS application</p>
 
 <h2>Technologies Used</h2>
 <ul>
